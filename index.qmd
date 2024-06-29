@@ -99,7 +99,7 @@ ranktable |>
   gt() |> 
   tab_style(cell_text(weight = "bold"), locations = cells_body(columns = Nom, rows = rank(desc(Total), ties.method = "min") < 4)) |> 
   cols_label_with(fn= \(x) str_replace(x,"tour", "Tour ")) |> 
-  tab_spanner(label = "Phase de poules", columns = starts_with("Tour")) |> 
+  tab_spanner(label = "Phase de poules", columns = starts_with("tour")) |> 
   tab_source_note(source_note = md(paste0("*Dernière mise à jour: ", ymd_hm(format(Sys.time(), '%Y-%m-%d %H:%M')), "*"))) |> 
   
   opt_interactive(
