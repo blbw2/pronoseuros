@@ -93,17 +93,121 @@ ranktable <- classement |>
                          TRUE~Nom)) |> 
   select(-medalrank)
 
+
+
 ranktable |> 
   gt() |> 
   tab_style(cell_text(weight = "bold"), locations = cells_body(columns = Nom, rows = rank(desc(Total), ties.method = "min") < 4)) |> 
   cols_label_with(fn= \(x) str_replace(x,"tour", "Tour ")) |> 
   tab_spanner(label = "Phase de poules", columns = starts_with("Tour")) |> 
   tab_source_note(source_note = md(paste0("*Dernière mise à jour: ", ymd_hm(format(Sys.time(), '%Y-%m-%d %H:%M')), "*"))) |> 
+  
   opt_interactive(
     use_sorting = TRUE,
+    page_size_default = 13,
     page_size_values = c(13,26,52,104)
-  )
+  ) |> 
+  tab_style(
+    style = list(
+      cell_fill(color = "gold2")
+    ),
+    locations = cells_body(
+      columns = targets$columns_target,
+      rows = targets$rows_target
+     )
+    )
+
+   
 ```
 
+
+```{r}
+
+
+# columnst <- names(ranktable |> select(where(is.numeric)))
+# rowst <- map(ranktable|> select(where(is.numeric)), \(x) which(x == max(x))) |> unlist()
+# targets <- ranktable |> select(where(is.numeric)) |> mutate(rownumber=  seq_len(nrow(ranktable)))# |> map(\(x) x[x==max(x)]) |> list_rbind()
+# 
+# testgt <- ranktable |> 
+#   gt() |> 
+#   tab_style(cell_text(weight = "bold"), locations = cells_body(columns = Nom, rows = rank(desc(Total), ties.method = "min") < 4)) |> 
+#   cols_label_with(fn= \(x) str_replace(x,"tour", "Tour ")) |> 
+#   tab_spanner(label = "Phase de poules", columns = starts_with("Tour")) |> 
+#   tab_source_note(source_note = md(paste0("*Dernière mise à jour: ", ymd_hm(format(Sys.time(), '%Y-%m-%d %H:%M')), "*"))) |> 
+#   
+#   opt_interactive(
+#     use_sorting = TRUE,
+#     page_size_default = 13,
+#     page_size_values = c(13,26,52,104)
+#   ) |> 
+#   tab_style(
+#     style = list(
+#       cell_fill(color = "gold2")
+#     ),
+#     locations = cells_body(
+#       columns = columnst,
+#       rows = rowst
+#      )
+#     )
+# 
+# 
+# targets <- ranktable |> map(.f = function(.x) {data.frame(columns_target = imap(.x, ~ .y),
+#       rows_target = which(.x == max(.x))) 
+#       }
+#       ) |> 
+#   list_rbind()
+# 
+# test_gt <- ranktable |> 
+#   gt() |> 
+#   tab_style(cell_text(weight = "bold"), locations = cells_body(columns = Nom, rows = rank(desc(Total), ties.method = "min") < 4)) |> 
+#   cols_label_with(fn= \(x) str_replace(x,"tour", "Tour ")) |> 
+#   tab_spanner(label = "Phase de poules", columns = starts_with("Tour")) |> 
+#   tab_source_note(source_note = md(paste0("*Dernière mise à jour: ", ymd_hm(format(Sys.time(), '%Y-%m-%d %H:%M')), "*"))) |> 
+#   
+#   opt_interactive(
+#     use_sorting = TRUE,
+#     page_size_default = 13,
+#     page_size_values = c(13,26,52,104)
+#   ) |> 
+#   Reduce(function(x) x |> tab_style_body(style = list(cell_fill(color ="gold2"))), lo ,
+#          )
+# 
+# target_condselect <- function(targetdf){
+#   cells_body()
+# }
+# 
+# 
+# 
+#  # |> tab_style_body(
+#  #    columns = where(is.numeric),
+#  #    style = cell_fill(color = "gold2"),
+#  #    fn = function(x) x == max(x)
+#  #  )
+# 
+#   
+#   ranktable |> select((is.numeric)) |> 
+#       map(.f = function(.x) {cells_body(columns = .x,
+#                                          rows = which(.x == max(.x)))})
+#   testf <- function(ranktable){
+#    ranktable  |> 
+#       map(.f = function(.x) {data.frame(columns_target = is.numeric(.x),
+#       rows_target = which(.x == max(.x))) #|> list_rbind()
+#       }
+#       )
+#   }
+#   
+#   debugonce(testf)
+# testf(ranktable)
+# 
+#  test <- ranktable  |> 
+#       map(.f = function(.x) {data.frame(columns_target = is.numeric(.x),
+#       rows_target = which(.x == max(.x))) 
+#       }
+#       )|>
+#    list_rbind()
+#    cells_body(columns = test[["columns_target"]], rows = [["rows_target"]])
+   
+
+```
 
 
