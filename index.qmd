@@ -106,16 +106,17 @@ ranktable |>
     use_sorting = TRUE,
     page_size_default = 13,
     page_size_values = c(13,26,52,104)
-  ) |> 
-  tab_style(
-    style = list(
-      cell_fill(color = "gold2")
-    ),
-    locations = cells_body(
-      columns = targets$columns_target,
-      rows = targets$rows_target
-     )
-    )
+   )
+  #|> 
+  # tab_style(
+  #   style = list(
+  #     cell_fill(color = "gold2")
+  #   ),
+  #   locations = cells_body(
+  #     columns = targets$columns_target,
+  #     rows = targets$rows_target
+  #    )
+  #   )
 
    
 ```
